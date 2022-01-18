@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SigninComponent implements OnInit {
 
-  constructor() { }
+  signinForm = this.fb.group({
+    user: this.fb.group({
+      email: [''],
+      password: [''],
+    }),
+  });
+
 
   ngOnInit(): void {
+  }
+
+
+  constructor(private fb : FormBuilder) {
+
+  }
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.signinForm.value);
   }
 
 }

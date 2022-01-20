@@ -1,12 +1,15 @@
 <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
     <div formGroupName="user">
         <h2>Veuillez vous connecter:</h2>
+        <mat-form-field appearance="fill">
+            <mat-label for="email">Email: </mat-label>
+            <input matInput placeholder="pat@example.com" id="email" type="email" formControlName="email">
+        </mat-form-field>
 
-        <label for="email">Email: </label>
-        <input id="email" type="email" formControlName="email">
-
-        <label for="password">Mot de passe: </label>
-        <input id="password" type="password" formControlName="password">
+        <mat-form-field appearance="fill">
+            <mat-label for="password">Mot de passe: </mat-label>
+            <input matInput placeholder="patricklatrique69" id="password" type="password" formControlName="password">
+        </mat-form-field>
     </div>
-    <button type="submit" [disabled]="!signinForm.valid">Connexion</button>
+    <button type="submit" [disabled]="!signinForm.valid"><a routerLink="/gestion" class="nonelink">Connexion</a></button>
 </form>

@@ -19,13 +19,15 @@ import {MatInputModule} from '@angular/material/input'
 
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { GestionComponent } from './gestion/gestion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    GestionComponent
   ],
   imports: [
     BrowserModule,

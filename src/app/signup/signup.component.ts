@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, EmailValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, EmailValidator, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { ConnexionService } from '../services/connexion.service';
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -8,8 +13,8 @@ import { FormGroup, FormBuilder, Validators, EmailValidator } from '@angular/for
 export class SignupComponent implements OnInit {
   value = '';
   signupForm = this.fb.group({
-      email: [''],
-      password1: [''],
+      email: new FormControl(''),
+      password: new FormControl(''),
   });
 
 
@@ -17,17 +22,12 @@ export class SignupComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router, private connexionService : ConnexionService) {
 
   }
   onSubmit() {
-    this.value = JSON.stringify(this.signupForm.value);
-    localStorage.setItem("user", this.value);
-    this.afficherUser();
+    this.connexionService.signUp(this.signupForm);
+    this.router.navigate(['/connexion']);
+    
   }
-
-  afficherUser() {
-    console.log(localStorage.getItem("user"));
-  }
-
 }

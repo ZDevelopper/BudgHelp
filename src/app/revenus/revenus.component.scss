@@ -1,0 +1,19 @@
+table{
+    width: 100%;
+}
+
+#ajoutLigne{
+    margin-top: 2vh;
+    margin-left: 1vw;
+}
+
+tr.mat-footer-row {
+    font-weight: bold;
+  }
+
+mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+  }

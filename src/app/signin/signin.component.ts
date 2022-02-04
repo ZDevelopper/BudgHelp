@@ -1,31 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { ConnexionService } from '../services/connexion.service';
+
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss']
 })
-export class SigninComponent implements OnInit {
 
+
+
+export class SigninComponent{
+  
+  
+  constructor(private fb : FormBuilder, private connexionService : ConnexionService,private router: Router) {
+
+  }
   signinForm = this.fb.group({
-    user: this.fb.group({
-      email: [''],
-      password: [''],
-    }),
+    email: new FormControl(''),
+    password: new FormControl(''),
   });
-
-
-  ngOnInit(): void {
-  }
-
-
-  constructor(private fb : FormBuilder) {
-
-  }
+  
+  
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.signinForm.value);
+    this.connexionService.signIn(this.signinForm);
+    this.router.navigate(['/gestion']);
   }
 
 }

@@ -1,12 +1,14 @@
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-
     <h2>Veuillez vous enregistrer:</h2>
 
-    <label for="email">Email: </label>
-    <input id="email" type="email" formControlName="email">
-    <label for="password1">Mot de passe: </label>
-    <input id="password1" type="password" formControlName="password1">
-    <label for="password2">Confirmation de mot de passe: </label>
-    <input id="password2" type="password" formControlName="password2">
-    <button type="submit" [disabled]="!signupForm.valid">Connexion</button>
+    <mat-form-field appearance="fill">
+        <mat-label for="email">Email: </mat-label>
+        <input matInput placeholder="pat@example.com" id="email" type="email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="password">Mot de passe: </mat-label>
+        <input matInput placeholder="patricklatrique69" id="password" type="password" formControlName="password">
+    </mat-form-field>
+    <button mat-stroked-button type="submit" [disabled]="!signupForm.valid" class="nonelink">Inscription</button>
 </form>

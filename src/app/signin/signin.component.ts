@@ -13,19 +13,19 @@ import { ConnexionService } from '../services/connexion.service';
 
 
 
-export class SigninComponent{
-  
-  
-  constructor(private fb : FormBuilder, private connexionService : ConnexionService,private router: Router) {
+export class SigninComponent {
+
+
+  constructor(private fb: FormBuilder, private connexionService: ConnexionService, private router: Router) {
 
   }
   signinForm = this.fb.group({
     email: new FormControl(''),
     password: new FormControl(''),
   });
-  
-  
-  onSubmit() {
+
+
+  submitForm() {
     this.connexionService.signIn(this.signinForm);
     this.router.navigate(['/gestion']);
   }

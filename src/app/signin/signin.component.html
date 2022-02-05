@@ -1,4 +1,4 @@
-<form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="signinForm">
 
     <h2>Veuillez vous connecter:</h2>
     <mat-form-field appearance="fill">
@@ -10,6 +10,6 @@
         <mat-label for="password">Mot de passe: </mat-label>
         <input matInput placeholder="patricklatrique69" id="password" type="password" formControlName="password">
     </mat-form-field>
-    <button mat-stroked-button type="submit" [disabled]="!signinForm.valid" routerLink="/gestion"
+    <button mat-stroked-button type="button" (click)="submitForm()" [disabled]="!signinForm.valid" routerLink="/gestion"
         class="nonelink">Connexion</button>
 </form>

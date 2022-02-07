@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
   private _mobileQueryListener: () => void;
   isLogged:boolean=false;
+  theme:any="dark-theme";
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public overlayContainer: OverlayContainer,public connexionService : ConnexionService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -34,5 +35,6 @@ export class AppComponent implements OnInit{
   onSetTheme(theme:any) {
     this.overlayContainer.getContainerElement().classList.add(theme);
     this.componentCssClass = theme;
+    this.theme=theme;
   }
 }

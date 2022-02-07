@@ -24,7 +24,7 @@ const ELEMENT_DATA: Revenus[] = [
   styleUrls: ['./revenus.component.scss']
 })
 export class RevenusComponent implements OnInit {
-
+  
   hidden: boolean = true;
   auth = getAuth();
   revenuForm = new FormGroup({
@@ -32,22 +32,24 @@ export class RevenusComponent implements OnInit {
     montant: new FormControl(''),
     renouvellement: new FormControl('')
   });
-
+  revenusByUser:any;
   displayedColumns: string[] = ['type', 'montant', 'renouvellement', 'suppression'];
   dataSource = [...ELEMENT_DATA];
   @ViewChild(MatTable) table: MatTable<Revenus>;
   constructor(private revenuService: RevenuService) { }
 
   ngOnInit(): void {
-
+    this.revenuService.getCurrentUserRevenus().subscribe((data)=>{
+      this.revenusByUser=data;
+      console.log(this.revenusByUser);
+      for(let r in this.revenusByUser){
+        for(let e in this.revenusByUser[r]){
+          console.log(this.revenusByUser[r][e]);
+        }
+      }
+    });
   }
 
-
-  function() {
-    const auth = getAuth();
- 
-    console.log(this.revenuService.get(auth.currentUser?.uid));
-  }
   
   add() {
     this.revenuService.add(this.revenuForm);

@@ -44,9 +44,21 @@ export class ConnexionService {
   get isSignedIn(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       onAuthStateChanged(getAuth(), (user) => {
-        observer.next(!!user)
+        observer.next(!!user);
       })
     })
+  }
+
+  public get currentUser(): Observable<any> {
+    return new Observable<any>((observer) => {
+      onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+          observer.next(user);
+        } else {
+          observer.next(null);
+        }
+      })
+    }) 
   }
 
 

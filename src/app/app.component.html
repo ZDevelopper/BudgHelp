@@ -18,10 +18,10 @@
             <a mat-list-item routerLink="inscription" *ngIf="!isLogged">
                 <mat-icon>person_add</mat-icon>
             </a>
-            <a mat-list-item (click)="onSetTheme('light-theme')">
+            <a mat-list-item (click)="onSetTheme('light-theme')" *ngIf="this.theme=='dark-theme'">
                 <mat-icon>light_mode</mat-icon>
             </a>
-            <a mat-list-item (click)="onSetTheme('dark-theme')">
+            <a mat-list-item (click)="onSetTheme('dark-theme')" *ngIf="this.theme=='light-theme'">
                 <mat-icon>dark_mode</mat-icon>
             </a>
         </mat-nav-list>

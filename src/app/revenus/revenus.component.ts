@@ -51,6 +51,7 @@ export class RevenusComponent implements OnInit {
   getFromDataBase() {
     this.revenuService.getCurrentUserRevenus().subscribe((data) => {
       this.revenusByUser = data;
+      this.dataSource = [];
       for (let r in this.revenusByUser) {
         let objetTempo = {} as Revenus;
         for (let e in this.revenusByUser[r]) {

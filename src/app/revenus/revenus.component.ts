@@ -16,7 +16,7 @@ export interface Revenus {
 
 
 const ELEMENT_DATA: Revenus[] = [
-  { type: "Salaire", montant: 1828, renouvellement: "Mensuel", suppression: true }
+ 
 ];
 @Component({
   selector: 'app-revenus',
@@ -32,7 +32,7 @@ export class RevenusComponent implements OnInit {
     montant: new FormControl(''),
     renouvellement: new FormControl('')
   });
-  objetTempo: Revenus = { type: "", montant: 0, renouvellement: "", suppression: true }
+
   count: number = 0;
   revenusByUser: any;
   displayedColumns: string[] = ['type', 'montant', 'renouvellement', 'suppression'];
@@ -41,43 +41,44 @@ export class RevenusComponent implements OnInit {
   constructor(private revenuService: RevenuService) { }
 
   ngOnInit(): void {
+    console.log(this.dataSource);
+  }
+
+  ngAfterViewInit():void{
     this.getFromDataBase();
   }
 
   getFromDataBase() {
     this.revenuService.getCurrentUserRevenus().subscribe((data) => {
       this.revenusByUser = data;
-      console.log(this.revenusByUser);
       for (let r in this.revenusByUser) {
+        let objetTempo = {} as Revenus;
         for (let e in this.revenusByUser[r]) {
-          console.log(this.revenusByUser[r][e]);
           switch (this.count) {
             case 0:
-              this.objetTempo.montant = this.revenusByUser[r][e];
+              objetTempo.montant = this.revenusByUser[r][e];
               this.count++;
               break;
             case 1:
-              this.objetTempo.renouvellement = this.revenusByUser[r][e];
+              objetTempo.renouvellement = this.revenusByUser[r][e];
               this.count++;
               break;
             case 2:
-              this.objetTempo.type = this.revenusByUser[r][e];
+              objetTempo.type = this.revenusByUser[r][e];
               this.count = 0;
-              console.log(this.objetTempo);
-              this.dataSource.push(this.objetTempo);
+              console.log(objetTempo);
+              this.dataSource.push(objetTempo);
               break;
           }
         }
       }
+      this.table.renderRows();
     });
-    console.log(this.dataSource);
-
   }
 
 
   add() {
     this.revenuService.add(this.revenuForm);
-    this.table.renderRows();
     this.hide();
   }
 
@@ -93,7 +94,6 @@ export class RevenusComponent implements OnInit {
 
   hide() {
     this.hidden = true;
-    this.table.renderRows();
   }
 
   getTotalCost() {

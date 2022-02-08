@@ -24,7 +24,7 @@ const ELEMENT_DATA: Revenus[] = [
   styleUrls: ['./revenus.component.scss']
 })
 export class RevenusComponent implements OnInit {
-  
+
   hidden: boolean = true;
   auth = getAuth();
   revenuForm = new FormGroup({
@@ -32,29 +32,53 @@ export class RevenusComponent implements OnInit {
     montant: new FormControl(''),
     renouvellement: new FormControl('')
   });
-  revenusByUser:any;
+  objetTempo: Revenus = { type: "", montant: 0, renouvellement: "", suppression: true }
+  count: number = 0;
+  revenusByUser: any;
   displayedColumns: string[] = ['type', 'montant', 'renouvellement', 'suppression'];
   dataSource = [...ELEMENT_DATA];
   @ViewChild(MatTable) table: MatTable<Revenus>;
   constructor(private revenuService: RevenuService) { }
 
   ngOnInit(): void {
-    this.revenuService.getCurrentUserRevenus().subscribe((data)=>{
-      this.revenusByUser=data;
+    this.getFromDataBase();
+  }
+
+  getFromDataBase() {
+    this.revenuService.getCurrentUserRevenus().subscribe((data) => {
+      this.revenusByUser = data;
       console.log(this.revenusByUser);
-      for(let r in this.revenusByUser){
-        for(let e in this.revenusByUser[r]){
+      for (let r in this.revenusByUser) {
+        for (let e in this.revenusByUser[r]) {
           console.log(this.revenusByUser[r][e]);
+          switch (this.count) {
+            case 0:
+              this.objetTempo.montant = this.revenusByUser[r][e];
+              this.count++;
+              break;
+            case 1:
+              this.objetTempo.renouvellement = this.revenusByUser[r][e];
+              this.count++;
+              break;
+            case 2:
+              this.objetTempo.type = this.revenusByUser[r][e];
+              this.count = 0;
+              console.log(this.objetTempo);
+              this.dataSource.push(this.objetTempo);
+              break;
+          }
         }
       }
     });
+    console.log(this.dataSource);
+
   }
 
-  
+
   add() {
     this.revenuService.add(this.revenuForm);
     this.table.renderRows();
-    this.hidden = true;
+    this.hide();
   }
 
   show() {
@@ -69,6 +93,7 @@ export class RevenusComponent implements OnInit {
 
   hide() {
     this.hidden = true;
+    this.table.renderRows();
   }
 
   getTotalCost() {

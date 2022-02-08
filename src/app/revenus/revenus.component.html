@@ -1,60 +1,59 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <!--- Note that these columns can be defined in any order.
+    <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
 
-  <!-- Type Column -->
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef> Type </th>
-    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-    <td mat-footer-cell *matFooterCellDef> Total </td>
-  </ng-container>
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
 
-  <!-- Montant Column -->
-  <ng-container matColumnDef="montant">
-    <th mat-header-cell *matHeaderCellDef> Montant </th>
-    <td mat-cell *matCellDef="let element"> {{element.montant | currency: 'EUR'}} </td>
-    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: 'EUR'}} </td>
-  </ng-container>
+    <!-- Montant Column -->
+    <ng-container matColumnDef="montant">
+        <th mat-header-cell *matHeaderCellDef> Montant </th>
+        <td mat-cell *matCellDef="let element"> {{element.montant | currency: 'EUR'}} </td>
+        <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency: 'EUR'}} </td>
+    </ng-container>
 
-  <!-- Renouvellement Column -->
-  <ng-container matColumnDef="renouvellement">
-    <th mat-header-cell *matHeaderCellDef> Renouvellement </th>
-    <td mat-cell *matCellDef="let element"> {{element.renouvellement}} </td>
-    <td mat-footer-cell *matFooterCellDef></td>
-  </ng-container>
+    <!-- Renouvellement Column -->
+    <ng-container matColumnDef="renouvellement">
+        <th mat-header-cell *matHeaderCellDef> Renouvellement </th>
+        <td mat-cell *matCellDef="let element"> {{element.renouvellement}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
 
-  <!-- Renouvellement Column -->
-  <ng-container matColumnDef="suppression">
-    <th mat-header-cell *matHeaderCellDef> Suppression </th>
-    <td mat-cell *matCellDef="let element;let i"><button mat-raised-button color="warn" id="supprLigne"
-        (click)="remove(i)">Supprimer</button></td>
-    <td mat-footer-cell *matFooterCellDef></td>
-  </ng-container>
+    <!-- Renouvellement Column -->
+    <ng-container matColumnDef="suppression">
+        <th mat-header-cell *matHeaderCellDef> Suppression </th>
+        <td mat-cell *matCellDef="let element;let i"><button mat-raised-button color="warn" id="supprLigne" (click)="remove(i)">Supprimer</button></td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky:true"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky:true"></tr>
 </table>
 
 <button mat-stroked-button id="ajoutLigne" (click)="show()">Ajouter un revenu</button>
 
 <form [formGroup]="revenuForm" *ngIf="hidden==false">
-  <mat-form-field appearance="fill">
-    <mat-label for="type">Type: </mat-label>
-    <input matInput id="type" type="text" formControlName="type">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label for="montant">Montant: </mat-label>
-    <input matInput id="montant" type="number" formControlName="montant">
-  </mat-form-field>
-  <mat-radio-group formControlName="renouvellement">
-    <mat-radio-button value="Ponctuel">Ponctuel</mat-radio-button>
-    <mat-radio-button value="Hebdomadaire">Hebdomadaire</mat-radio-button>
-    <mat-radio-button value="Mensuel">Mensuel</mat-radio-button>
-    <mat-radio-button value="Annuel">Annuel</mat-radio-button>
-  </mat-radio-group>
-  <button mat-stroked-button type="submit" (click)="add()">Ajouter</button>
-  <button mat-stroked-button (click)="hide()">Annuler</button>
+    <mat-form-field appearance="fill">
+        <mat-label for="type">Type: </mat-label>
+        <input matInput id="type" type="text" formControlName="type">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label for="montant">Montant: </mat-label>
+        <input matInput id="montant" type="number" formControlName="montant">
+    </mat-form-field>
+    <mat-radio-group formControlName="renouvellement">
+        <mat-radio-button value="Ponctuel">Ponctuel</mat-radio-button>
+        <mat-radio-button value="Hebdomadaire">Hebdomadaire</mat-radio-button>
+        <mat-radio-button value="Mensuel">Mensuel</mat-radio-button>
+        <mat-radio-button value="Annuel">Annuel</mat-radio-button>
+    </mat-radio-group>
+    <button mat-stroked-button type="button" (click)="add()">Ajouter</button>
+    <button mat-stroked-button (click)="hide()">Annuler</button>
 </form>

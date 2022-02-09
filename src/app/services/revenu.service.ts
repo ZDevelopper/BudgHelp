@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, onValue, ref, set } from 'firebase/database';
+import { getDatabase, onValue, ref, remove, set } from 'firebase/database';
 import { Observable, of, switchMap } from 'rxjs';
 import { ConnexionService } from './connexion.service';
 
@@ -10,7 +10,7 @@ import { ConnexionService } from './connexion.service';
 })
 export class RevenuService {
 
-  constructor(private connexionService : ConnexionService) { }
+  constructor(private connexionService: ConnexionService) { }
 
   add(revenuForm: FormGroup) {
     const auth = getAuth();
@@ -22,13 +22,13 @@ export class RevenuService {
     });
   }
 
-  public getRevenusByUser(userId:any): Observable<any> {
+  public getRevenusByUser(userId: any): Observable<any> {
     return new Observable((observer) => {
       const db = getDatabase();
-      const revenuRef = ref(db, 'revenus/'+userId);
+      const revenuRef = ref(db, 'revenus/' + userId);
       onValue(revenuRef, (snapshot) => {
-        if(snapshot.exists()){
-          const data = snapshot.val(); 
+        if (snapshot.exists()) {
+          const data = snapshot.val();
           observer.next(data)
         } else {
           observer.error()
@@ -43,9 +43,14 @@ export class RevenuService {
         if (user) {
           return this.getRevenusByUser(user.uid)
         } else {
-         return of(null)
+          return of(null)
         }
       })
     )
+  }
+
+  delete(type: string, userId: any) {
+    const db = getDatabase();
+    remove(ref(db, 'revenus/' + userId + '/' + type));
   }
 }

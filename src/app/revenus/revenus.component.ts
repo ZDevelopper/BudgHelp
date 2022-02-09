@@ -88,9 +88,10 @@ export class RevenusComponent implements OnInit {
   }
 
   remove(element: any) {
-    const index = this.dataSource.indexOf(element);
+   /*  const index = this.dataSource.indexOf(element);
     this.dataSource.splice(index, 1);
-    this.table.renderRows();
+    this.table.renderRows(); */
+    this.revenuService.delete(element.type,this.auth.currentUser?.uid);
   }
 
   hide() {
